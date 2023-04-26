@@ -13,3 +13,4 @@ library(tidyverse)
 r3::check_git_config()
 
 #here is an example of a conflict
+#here is an example of a conflict
