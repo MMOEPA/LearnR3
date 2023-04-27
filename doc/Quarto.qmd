@@ -23,8 +23,9 @@ nhanes_small
 nhanes_small %>%
   filter(!is.na(diabetes)) %>%
   group_by(diabetes, education) %>%
-  summarise(mean(age, na.rm = TRUE), mean_bmi = mean(bmi, na.rm = TRUE)) %>% ungroup() %>% 
-knitr::kable(caption = "Mean values of Age and BMI for each education and diabetes status.")
+  summarise(mean(age, na.rm = TRUE), mean_bmi = mean(bmi, na.rm = TRUE)) %>%
+  ungroup() %>%
+  knitr::kable(caption = "Mean values of Age and BMI for each education and diabetes status.")
 ```
 
 # Prettier table
@@ -40,22 +41,93 @@ nhanes_small %>%
   ungroup() %>%
   mutate(
     # Task 2a.
-    mean_age = round (mean_age, 1),
-    mean_bmi = round (mean_bmi, 1),
+    mean_age = round(mean_age, 1),
+    mean_bmi = round(mean_bmi, 1),
     # Task 2b.
     education = str_to_sentence(education)
-  ) %>% 
+  ) %>%
   rename(
     # Task 3.
     "Diabetes status" = diabetes,
     "Education" = education,
     "Mean age" = mean_age,
     "Mean BMI" = mean_bmi
-  ) %>% 
+  ) %>%
   knitr::kable(caption = "Mean values of Age and BMI for each education and diabetes status.")
-
-
 ```
-Golden retriever in @fig-kitten-attack!
-![Puppy by Funpawcare.com !](images/Golden-Retriever.jpg) {#fig-kitten-attack width="50%" height="50%"}
 
+Golden retriever in @fig-kitten-attack! ![Puppy by Funpawcare.com !](images/Golden-Retriever.jpg) {#fig-kitten-attack width="50%" height="50%"}
+
+## visualizing data 
+
+```{r}
+# Create histogram for BMI
+ggplot(nhanes_small, aes(x = bmi)) +
+  geom_histogram()
+```
+
+```{r}
+# Create histogram for BMI
+ggplot(nhanes_small, aes(x = bmi)) +
+  geom_histogram(na.rm = TRUE)
+```
+
+BMI distrubution in NHANES dataset was visulised in @fig-bmi-histo
+
+```{r}
+nhanes_small %>%
+  filter(bmi <= 60) %>%
+  ggplot(aes(x = bmi)) +
+  geom_histogram(na.rm = TRUE)
+
+
+
+
+#| fig-cap: "Distribution of BMI."
+#| label: fig-bmi-histo
+
+nhanes_small %>%
+  filter(bmi <= 60) %>%
+  ggplot(aes(x = bmi)) +
+  geom_histogram(na.rm = TRUE)
+```
+
+
+```{r}
+# Create count barplot for education
+ggplot(nhanes_small, aes(x = education)) +
+  geom_bar()
+```
+
+# Create count barplot for diabetes status
+```{r}
+# Create count barplot for diabetes status
+ggplot(nhanes_small, aes(x = diabetes)) +
+  geom_bar()
+```
+
+```{r}
+nhanes_small %>%
+  filter(!is.na(diabetes)) %>%
+  ggplot(aes(x = diabetes)) +
+  geom_bar()
+```
+
+```{r}
+#| label: fig-diabetes-education
+#| fig-cap: "Counts of diabetes and education in NHANES"
+#| fig-subcap:
+#|   - "Number of those with or without diabetes."
+#|   - "Number of those with different educational status."
+#| layout-ncol: 2
+
+nhanes_small %>%
+  filter(!is.na(diabetes)) %>%
+  ggplot(aes(x = diabetes))
+geom_bar()
+
+nhanes_small %>%
+  filter(!is.na(education)) %>%
+  ggplot(aes(x = education)) +
+  geom_bar()
+```
