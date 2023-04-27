@@ -111,4 +111,6 @@ readr::write_csv(nhanes_small,
 
 nhanes_small <- readr::read_csv(here::here("data/nhanes_small.csv"))
 
+#prettier table
+
 
