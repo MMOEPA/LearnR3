@@ -247,3 +247,51 @@ nhanes_small %>%
     geom_point(na.rm = TRUE)
 ```
 
+
+```{r}
+#Plot BMI
+nhanes_small %>% 
+    filter(!is.na(diabetes)) %>% 
+    ggplot(aes(x = bmi, y = bp_sys_ave, colour= diabetes))+
+    geom_point()
+
+```
+
+
+```{r}
+#plotBMI
+nhanes_small %>% 
+    filter(!is.na(diabetes)) %>% 
+    ggplot(aes(x = bmi, y = bp_sys_ave, colour = diabetes)) +
+    geom_point(na.rm =TRUE)
+   facet_grid(cols = vars(diabetes))
+```
+
+```{r}
+#tttt
+nhanes_small %>% 
+    filter(!is.na(diabetes), !is.na(education)) %>% 
+    ggplot(aes(x =bmi, y = bp_sys_ave, colour = age)) +
+    geom_point(na.rm = TRUE) +
+    facet_grid(
+        rows = vars(diabetes),
+        cols = vars(education)
+    )
+```
+
+
+
+
+
+
+
+
+
+```{r}
+# faceting by row
+nhanes_small %>% 
+    filter(!is.na(diabetes)) %>% 
+    ggplot(aes(x = bmi, y = bp_sys_ave))+
+    geom_point(na.rm =TRUE) +
+    facet_grid(rows =vars(diabetes))
+
