@@ -195,25 +195,25 @@ nhanes_exercise <- NHANES %>%
 ```{r}
 #| label: fig-distribution-age
 #| fig-plot: "Distribution of age and diabetes"
-#| layout-ncol: 2: 
+#| layout-ncol: 2:
 #| fig-subcap:
 #|   - "age at coll"
 #|   - "age at diab"
 # Distribution of age
 ggplot(nhanes_exercise, aes(x = age)) +
-    geom_density(na.rm = TRUE )
+  geom_density(na.rm = TRUE)
 
 # Distribution of age at diabetes diagnosis
 ggplot(nhanes_exercise, aes(x = diabetes_age)) +
-    geom_density(na.rm = TRUE)
+  geom_density(na.rm = TRUE)
 ```
 
 
 ```{r}
 # Number of people who smoke now and are or above 20 years of age,
 # removing those with missing smoking status.
-nhanes_exercise %>% 
-  filter(age >= 20, !is.na(smoke_now)) %>% 
+nhanes_exercise %>%
+  filter(age >= 20, !is.na(smoke_now)) %>%
   ggplot(aes(x = smoke_now)) +
   geom_bar()
 ```
@@ -222,10 +222,28 @@ nhanes_exercise %>%
 
 ```{r}
 # BMI in relation to mean arterial pressure
-nhanes_exercise %>% 
-  mutate(mean_arterial_pressure = (bp_sys_ave + (2 * bp_dia_ave)) / 3) %>% 
+nhanes_exercise %>%
+  mutate(mean_arterial_pressure = (bp_sys_ave + (2 * bp_dia_ave)) / 3) %>%
   ggplot(aes(x = bmi, y = mean_arterial_pressure)) +
   geom_hex(na.rm = TRUE) +
   geom_smooth()
+```
+
+### Plotting three or more variables
+
+```{r}
+# Plot syst bp in relation to educ. and diabetes
+nhanes_small %>%
+  filter(!is.na(diabetes), !is.na(education)) %>% 
+  ggplot(aes(x = education, y = bp_sys_ave, colour = diabetes)) +
+  geom_boxplot(na.rm = TRUE)
+```
+
+
+```{r}
+# plot BMI
+nhanes_small %>% 
+    ggplot(aes(x = bmi, y = bp_sys_ave, colour = age)) +
+    geom_point(na.rm = TRUE)
 ```
 
